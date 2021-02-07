@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1051667825650",
+    "project_id": "home-inventory-app-cf0e9",
+    "storage_bucket": "home-inventory-app-cf0e9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1051667825650:android:345e2301fc202d3b6f216b",
+        "android_client_info": {
+          "package_name": "com.ichlebimaldi.inventory_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1051667825650-qn8g8bfddupaddjl77crfivqv4kjv75d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDaFNuNS2W9yQfP19gBusicvOOHjApumYE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1051667825650-qn8g8bfddupaddjl77crfivqv4kjv75d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

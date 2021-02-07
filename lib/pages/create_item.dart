@@ -14,6 +14,7 @@ class _CreateItemState extends State<CreateItem> {
   TextEditingController barcode_controller = new TextEditingController();
   TextEditingController quantity_controller = new TextEditingController();
   TextEditingController expiring_date_controller = new TextEditingController();
+  TextEditingController market_controller = new TextEditingController();
 
   Map test = {
     'title': "TITLE",
@@ -24,6 +25,8 @@ class _CreateItemState extends State<CreateItem> {
   };
 
   String barcode = "BARCODE";
+
+  String dropdownValue = "Knauf";
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +40,7 @@ class _CreateItemState extends State<CreateItem> {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-                  child: Column(
+          child: Column(
             children: [
               SizedBox(height: 20),
               Card(
@@ -74,9 +77,10 @@ class _CreateItemState extends State<CreateItem> {
                               border: InputBorder.none, hintText: barcode),
                         ),
                         IconButton(
-                          icon: Icon(Icons.camera_enhance), 
-                          onPressed: (){scanBarcode();}
-                        )
+                            icon: Icon(Icons.camera_enhance),
+                            onPressed: () {
+                              scanBarcode();
+                            })
                       ],
                     ),
                   )),
@@ -100,36 +104,37 @@ class _CreateItemState extends State<CreateItem> {
                     ),
                   )),
               Card(
-                  margin: EdgeInsets.all(16),
-                  elevation: 10,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)),
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10),
-                    child: Column(
-                      children: [
-                        TextField(
-                          readOnly: true,
-                          controller: expiring_date_controller,
-                          onTap: () {
-                            showDatePicker(
-                              context: context,
-                              initialDate: DateTime.now(),
-                              firstDate: DateTime(2000),
-                              lastDate: DateTime(2200)
-                            ).then((date) {
-                              setState(() {
-                                expiring_date_controller.text = date.toString();
-                              });
+                margin: EdgeInsets.all(16),
+                elevation: 10,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  child: Column(
+                    children: [
+                      TextField(
+                        readOnly: true,
+                        controller: expiring_date_controller,
+                        onTap: () {
+                          showDatePicker(
+                                  context: context,
+                                  initialDate: DateTime.now(),
+                                  firstDate: DateTime(2000),
+                                  lastDate: DateTime(2200))
+                              .then((date) {
+                            setState(() {
+                              expiring_date_controller.text = date.toString();
                             });
-                          },
-                          decoration: InputDecoration(
-                              border: InputBorder.none,
-                              hintText: "Enter the Expiringdate"),
-                        ),
-                      ],
-                    ),
-                  )),
+                          });
+                        },
+                        decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: "Enter the Expiringdate"),
+                      ),
+                    ],
+                  ),
+                )
+              ),
               FlatButton.icon(
                   onPressed: () {
                     // add NEW item to database --> products
@@ -149,15 +154,12 @@ class _CreateItemState extends State<CreateItem> {
                     Firestore.instance
                         .collection('inventory_products')
                         .document(title_controller.text)
-                        .setData(
-                        {
-                          'title': title_controller.text,
-                          'barcode': barcode_controller.text,
-                          'expiring_date': expiring_date_controller.text,
-                          'quantity': quantity_controller.text,
-                        }
-                      
-                    );
+                        .setData({
+                      'title': title_controller.text,
+                      'barcode': barcode_controller.text,
+                      'expiring_date': expiring_date_controller.text,
+                      'quantity': quantity_controller.text,
+                    });
 
                     Navigator.pop(context);
                   },

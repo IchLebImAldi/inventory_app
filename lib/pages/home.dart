@@ -52,47 +52,63 @@ class _HomeState extends State<Home> {
                 children: [
                   Center(
                     child: Container(
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
                         child: Card(
-                      elevation: 10,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15.0),
-                      ),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          ListTile(
-                            leading: Icon(Icons.album, size: 60),
-                            title: Text(document['title'],
-                                style: TextStyle(fontSize: 30.0)),
-                            subtitle: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text("Expire Date: "+dateFormat.format(dateFormat.parse(document['expiring_date'])).toString(),
-                                    style: TextStyle(fontSize: 18.0)),
-                                Text("Quantity: "+document['quantity'],
-                                style: TextStyle(fontSize: 18.0)),
+                          elevation: 10,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                          ),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            ListTile(
+                              leading: Icon(Icons.album, size: 60),
+                              title: Text(document['title'],
+                                  style: TextStyle(fontSize: 30.0)),
+                              subtitle: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                      "Expire Date: " +
+                                          dateFormat
+                                              .format(dateFormat.parse(
+                                                  document['expiring_date']))
+                                              .toString(),
+                                      style: TextStyle(fontSize: 18.0)),
+                                  Text("Quantity: " + document['quantity'],
+                                      style: TextStyle(fontSize: 18.0)),
+                                ],
+                              ),
+                            ),
+                            ButtonBar(
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                FlatButton.icon(
+                                  icon: Icon(
+                                    Icons.delete,
+                                    color: Colors.grey,
+                                  ),
+                                  label: Text(
+                                    "Delete",
+                                    style: TextStyle(color: Colors.grey),
+                                  ),
+                                  onPressed: () {
+                                    print(document['title']);
+                                    setState(() {
+                                      Firestore.instance
+                                          .collection('inventory_products')
+                                          .document(document['title'])
+                                          .delete();
+                                    });
+                                  },
+                                ),
                               ],
                             ),
-                            
-                          ),
-                          
-                          ButtonBar(
-                            children: <Widget>[
-                              RaisedButton(
-                                child: const Text('Delete'),
-                                onPressed: () {
-                                  print(document['title']);
-                                  setState(() {
-                                     Firestore.instance.collection('inventory_products').document(document['title']).delete();
-                                  });
-                                 
-                                },
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    )),
+                          ],
+                        ),
+                    ),
+                      )),
                   ),
                 ],
               ),
